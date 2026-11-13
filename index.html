@@ -38,11 +38,10 @@
   .logo{background-repeat:no-repeat;background-position:center;background-size:contain;display:block;}
   .logo-sr{aspect-ratio:1/1;height:clamp(72px,9vw,104px);background-image:var(--sr);}
   .logo-bio{aspect-ratio:768/362;height:clamp(54px,7vw,80px);background-image:var(--bio);}
-  .tb-bio{aspect-ratio:768/362;height:30px;background-image:var(--bio);opacity:.9;}
+  .tb-bio{aspect-ratio:768/362;height:30px;background-image:var(--bio);opacity:.92;}
+  .tb-sr{aspect-ratio:1/1;height:36px;background-image:var(--sr);}
 
-  .topbar{position:absolute;top:clamp(20px,3.4vw,40px);left:clamp(32px,6vw,96px);right:clamp(100px,10vw,140px);display:flex;align-items:center;justify-content:space-between;gap:16px;}
-  .topbar .sr{font-family:var(--serif);font-weight:600;letter-spacing:.02em;font-size:15px;color:var(--green);}
-  .topbar .sr small{display:block;font-family:var(--sans);font-weight:500;letter-spacing:.18em;text-transform:uppercase;font-size:9px;color:var(--muted);margin-top:2px;}
+  .topbar{position:absolute;top:clamp(18px,3vw,34px);left:clamp(32px,6vw,96px);right:clamp(32px,6vw,96px);display:flex;align-items:center;justify-content:space-between;gap:16px;z-index:5;}
 
   .kicker{display:inline-flex;align-items:center;gap:12px;font-family:var(--sans);font-weight:600;letter-spacing:.2em;text-transform:uppercase;font-size:12px;color:var(--gold);margin-bottom:22px;}
   .kicker::before{content:"";width:34px;height:1px;background:var(--gold);display:inline-block;}
@@ -109,39 +108,36 @@
   .contact .ci .v{font-size:clamp(15px,1.7vw,19px);color:#fff;font-weight:500;}
   .contact .nm{font-family:var(--serif);font-size:clamp(22px,2.6vw,30px);color:#fff;font-weight:600;margin-top:6px;}
 
-  /* VERTICAL page indicator, centered at the middle of the page (right edge) */
-  .nav{
-    position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:40;
-    display:flex;flex-direction:column;align-items:center;gap:12px;
-    background:rgba(255,255,255,.88);backdrop-filter:blur(10px);
-    border:1px solid var(--line);border-radius:999px;padding:14px 9px;
-    box-shadow:0 10px 30px rgba(28,27,25,.14);
-  }
-  .nav button.arrow{border:none;background:transparent;cursor:pointer;color:var(--green);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;transition:background .2s;}
-  .nav button.arrow:hover{background:rgba(29,78,69,.1);}
-  .nav button.arrow:disabled{opacity:.25;cursor:default;}
-  .dots{display:flex;flex-direction:column;align-items:center;gap:8px;}
-  .dot{width:8px;height:8px;border-radius:50%;background:var(--line);border:none;cursor:pointer;padding:0;transition:all .25s;}
-  .dot.active{background:var(--green);transform:scale(1.4);}
-  .counter{display:flex;flex-direction:column;align-items:center;gap:3px;font-family:var(--serif);font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.04em;margin-top:2px;}
-  .counter b{color:var(--green);font-size:13px;}
-  .counter .cdiv{width:14px;height:1px;background:var(--line);}
-
-  .hint{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:40;font-size:11px;color:#b4b0a6;letter-spacing:.06em;}
+  /* page chrome: progress bar (top), dots (bottom center), count (bottom right), section (bottom left), side arrows */
+  .bar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--gold);z-index:50;transition:width .4s ease;}
+  .chrome{position:fixed;z-index:40;font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600;}
+  .sect{bottom:24px;left:clamp(26px,6vw,96px);}
+  .count{bottom:22px;right:clamp(26px,6vw,96px);font-family:var(--serif);font-size:13px;letter-spacing:.06em;font-variant-numeric:tabular-nums;}
+  .count b{color:var(--green);}
+  .dots{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;gap:9px;z-index:40;}
+  .dots i{width:8px;height:8px;border-radius:50%;background:rgba(120,116,108,.35);cursor:pointer;transition:all .25s;display:block;}
+  .dots i.on{background:var(--gold);transform:scale(1.35);}
+  .nav{position:fixed;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;z-index:45;display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--paper);border:1px solid var(--line);color:var(--green);font-size:17px;box-shadow:0 8px 24px rgba(28,27,25,.14);transition:all .2s;}
+  .nav:hover{border-color:var(--gold);color:var(--gold);}
+  #prev{left:clamp(14px,2.2vw,26px);}
+  #next{right:clamp(14px,2.2vw,26px);background:var(--green);color:#fff;border-color:var(--green);}
+  #next:hover{background:#17463d;color:#fff;}
+  .nav[disabled]{opacity:.2;pointer-events:none;}
 
   @media(max-width:820px){
     .cards,.pillars,.steps{grid-template-columns:1fr;}
     .split{grid-template-columns:1fr;}
-    .topbar{right:clamp(72px,16vw,100px);}
-    .topbar .sr small{display:none;}
-    .hint{display:none;}
     .stat .big{min-width:92px;}
+    .nav{top:auto;bottom:16px;width:40px;height:40px;}
+    .sect{display:none;}
+    .count{left:50%;right:auto;transform:translateX(-50%);bottom:64px;}
+    .dots{bottom:64px;}
   }
   @media print{
     body{overflow:visible;background:#fff;}
     .deck{position:static;}
     .slide{position:relative;opacity:1!important;visibility:visible!important;transform:none!important;page-break-after:always;min-height:100vh;}
-    .nav,.hint{display:none!important;}
+    .nav,.bar,.dots,.chrome{display:none!important;}
   }
 </style>
 </head>
@@ -168,7 +164,7 @@
 
   <!-- 2. A NOTE -->
   <section class="slide note">
-    <div class="topbar"><div class="sr">Silk Road AI Solutions<small>Operations &amp; Growth</small></div><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
+    <div class="topbar"><span class="logo tb-sr" role="img" aria-label="Silk Road AI Solutions"></span><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
     <div class="inner">
       <span class="kicker">First, a disclosure</span>
       <h2 style="max-width:16ch;margin-bottom:22px;">I am a patient here, and I also do this for a living</h2>
@@ -179,7 +175,7 @@
 
   <!-- 3. WHO WE ARE -->
   <section class="slide">
-    <div class="topbar"><div class="sr">Silk Road AI Solutions<small>Operations &amp; Growth</small></div><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
+    <div class="topbar"><span class="logo tb-sr" role="img" aria-label="Silk Road AI Solutions"></span><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
     <div class="inner">
       <span class="kicker">Who we are</span>
       <h2 style="max-width:20ch;">Operations experience first, AI second</h2>
@@ -194,7 +190,7 @@
 
   <!-- 4. GROWTH PARADOX -->
   <section class="slide">
-    <div class="topbar"><div class="sr">Silk Road AI Solutions<small>Operations &amp; Growth</small></div><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
+    <div class="topbar"><span class="logo tb-sr" role="img" aria-label="Silk Road AI Solutions"></span><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
     <div class="inner">
       <span class="kicker">The pattern we see</span>
       <h2 style="max-width:22ch;margin-bottom:22px;">The busier a practice gets, the more leaks out the back</h2>
@@ -204,7 +200,7 @@
 
   <!-- 5. BOTTLENECKS: FRONT OF HOUSE -->
   <section class="slide">
-    <div class="topbar"><div class="sr">Silk Road AI Solutions<small>Operations &amp; Growth</small></div><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
+    <div class="topbar"><span class="logo tb-sr" role="img" aria-label="Silk Road AI Solutions"></span><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
     <div class="inner">
       <span class="kicker">Bottlenecks, part one &middot; the front of house</span>
       <div class="cards">
@@ -218,7 +214,7 @@
 
   <!-- 6. BOTTLENECKS: GROWTH & MARGIN -->
   <section class="slide">
-    <div class="topbar"><div class="sr">Silk Road AI Solutions<small>Operations &amp; Growth</small></div><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
+    <div class="topbar"><span class="logo tb-sr" role="img" aria-label="Silk Road AI Solutions"></span><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
     <div class="inner">
       <span class="kicker">Bottlenecks, part two &middot; growth and margin</span>
       <div class="cards">
@@ -232,7 +228,7 @@
 
   <!-- 7. CASE STUDY: CHALLENGE -->
   <section class="slide">
-    <div class="topbar"><div class="sr">Silk Road AI Solutions<small>Case Study</small></div><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
+    <div class="topbar"><span class="logo tb-sr" role="img" aria-label="Silk Road AI Solutions"></span><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
     <div class="inner">
       <span class="kicker">Case study &middot; the challenge</span>
       <span class="tag">Elements Integrative Wellness &middot; multi-provider wellness &amp; aesthetics</span>
@@ -248,7 +244,7 @@
 
   <!-- 8. CASE STUDY: WHAT WE BUILT -->
   <section class="slide">
-    <div class="topbar"><div class="sr">Silk Road AI Solutions<small>Case Study</small></div><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
+    <div class="topbar"><span class="logo tb-sr" role="img" aria-label="Silk Road AI Solutions"></span><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
     <div class="inner">
       <span class="kicker">Case study &middot; what we built</span>
       <div class="split">
@@ -272,7 +268,7 @@
 
   <!-- 9. CASE STUDY: IMPACT -->
   <section class="slide">
-    <div class="topbar"><div class="sr">Silk Road AI Solutions<small>Case Study</small></div><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
+    <div class="topbar"><span class="logo tb-sr" role="img" aria-label="Silk Road AI Solutions"></span><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
     <div class="inner">
       <span class="kicker">Case study &middot; what it targets</span>
       <h2 style="max-width:18ch;margin-bottom:10px;">The leaks the system is built to close</h2>
@@ -288,7 +284,7 @@
 
   <!-- 10. FOR BIORESTORATION -->
   <section class="slide">
-    <div class="topbar"><div class="sr">Silk Road AI Solutions<small>Operations &amp; Growth</small></div><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
+    <div class="topbar"><span class="logo tb-sr" role="img" aria-label="Silk Road AI Solutions"></span><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
     <div class="inner">
       <span class="kicker">What this could look like here</span>
       <div class="split">
@@ -310,7 +306,7 @@
 
   <!-- 11. HOW WE WORK -->
   <section class="slide">
-    <div class="topbar"><div class="sr">Silk Road AI Solutions<small>Operations &amp; Growth</small></div><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
+    <div class="topbar"><span class="logo tb-sr" role="img" aria-label="Silk Road AI Solutions"></span><span class="logo tb-bio" role="img" aria-label="Biorestoration"></span></div>
     <div class="inner">
       <span class="kicker">How we work</span>
       <h2 style="max-width:20ch;">Low risk, on purpose</h2>
@@ -325,6 +321,7 @@
 
   <!-- 12. CONTACT -->
   <section class="slide contact">
+    <div class="topbar"><span class="logo tb-sr" role="img" aria-label="Silk Road AI Solutions"></span><span class="logo tb-bio" role="img" aria-label="Biorestoration" style="filter:brightness(0) invert(1);opacity:.85;"></span></div>
     <div class="inner">
       <span class="kicker">The next step</span>
       <h2 style="max-width:18ch;margin-bottom:18px;">Thirty minutes, no charge</h2>
@@ -342,51 +339,42 @@
 
 </div>
 
-<!-- vertical page indicator, centered at the middle of the page -->
-<div class="nav" id="nav">
-  <button class="arrow" id="prev" aria-label="Previous slide">&#9650;</button>
-  <div class="dots" id="dots"></div>
-  <button class="arrow" id="next" aria-label="Next slide">&#9660;</button>
-  <span class="counter"><b id="cur">01</b><span class="cdiv"></span><span id="tot">12</span></span>
-</div>
-<div class="hint">Use &larr; &rarr; or &uarr; &darr; keys</div>
+<!-- page chrome -->
+<div class="bar" id="bar"></div>
+<button class="nav" id="prev" aria-label="Previous slide">&#8249;</button>
+<button class="nav" id="next" aria-label="Next slide">&#8250;</button>
+<div class="dots" id="dots"></div>
+<div class="chrome sect" id="sect"></div>
+<div class="chrome count"><b id="cur">01</b> / <span id="tot">12</span></div>
 
 <script>
+(function(){
   var slides=[].slice.call(document.querySelectorAll('.slide'));
-  var i=0;
-  var dotsWrap=document.getElementById('dots');
-  var curEl=document.getElementById('cur');
-  var prevBtn=document.getElementById('prev');
-  var nextBtn=document.getElementById('next');
-  document.getElementById('tot').textContent=String(slides.length).padStart(2,'0');
-  slides.forEach(function(s,idx){
-    var d=document.createElement('button');
-    d.className='dot'+(idx===0?' active':'');
-    d.setAttribute('aria-label','Go to slide '+(idx+1));
-    d.addEventListener('click',function(){go(idx);});
-    dotsWrap.appendChild(d);
-  });
-  var dots=[].slice.call(dotsWrap.children);
+  var sections=['','Introduction','Who we are','The pattern','Bottlenecks','Bottlenecks','Case study','Case study','Case study','For Biorestoration','How we work','Next step'];
+  var dots=document.getElementById('dots'),bar=document.getElementById('bar');
+  var cur=document.getElementById('cur'),tot=document.getElementById('tot'),sect=document.getElementById('sect');
+  var prev=document.getElementById('prev'),next=document.getElementById('next');
+  var i=0; tot.textContent=String(slides.length).padStart(2,'0');
+  slides.forEach(function(_,n){var d=document.createElement('i');d.addEventListener('click',function(){go(n);});dots.appendChild(d);});
+  var ds=[].slice.call(dots.children);
   function go(n){
-    n=Math.max(0,Math.min(slides.length-1,n));
-    slides[i].classList.remove('active');
-    dots[i].classList.remove('active');
-    i=n;
-    slides[i].classList.add('active');
-    dots[i].classList.add('active');
-    curEl.textContent=String(i+1).padStart(2,'0');
-    prevBtn.disabled=(i===0);
-    nextBtn.disabled=(i===slides.length-1);
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach(function(s,k){s.classList.toggle('active',k===i);});
+    ds.forEach(function(d,k){d.classList.toggle('on',k===i);});
+    cur.textContent=String(i+1).padStart(2,'0');
+    sect.textContent=sections[i]||'';
+    bar.style.width=((i+1)/slides.length*100)+'%';
+    prev.disabled=(i===0); next.disabled=(i===slides.length-1);
   }
-  prevBtn.addEventListener('click',function(){go(i-1);});
-  nextBtn.addEventListener('click',function(){go(i+1);});
+  prev.addEventListener('click',function(){go(i-1);});
+  next.addEventListener('click',function(){go(i+1);});
   document.addEventListener('keydown',function(e){
-    if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key==='PageDown'){e.preventDefault();go(i+1);}
-    if(e.key==='ArrowLeft'||e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();go(i-1);}
-    if(e.key==='Home'){go(0);}
-    if(e.key==='End'){go(slides.length-1);}
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(i+1);}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(i-1);}
+    if(e.key==='Home'){go(0);} if(e.key==='End'){go(slides.length-1);}
   });
   go(0);
+})();
 </script>
 </body>
 </html>
